@@ -3,6 +3,7 @@ package com.example.demo.api;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import com.example.demo.service.UserService;
 public class UserController {
     private final UserService userService;
 
+    @Autowired
     public UserController (UserService userService) {
         this.userService = userService;
     }
@@ -37,7 +39,7 @@ public class UserController {
 
     // Get User by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
         Optional<User> userOpt = userService.getUserById(id);
         return userOpt.map(user -> ResponseEntity.ok(user))
                       .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -52,13 +54,13 @@ public class UserController {
 
     // Update User
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody UpdateUserDto AtualizaUsuario) {
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UpdateUserDto AtualizaUsuario) {
         return userService.update(id, AtualizaUsuario);
     }
 
     // Delete User
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         return userService.delete(id);
     }
 }
