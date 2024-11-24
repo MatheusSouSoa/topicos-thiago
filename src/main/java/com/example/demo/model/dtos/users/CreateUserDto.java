@@ -4,6 +4,6 @@ public record CreateUserDto(
     String name,
     String email,
     Integer age,
-    Integer id
+    Long id
 ) {
 }
